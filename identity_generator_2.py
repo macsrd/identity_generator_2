@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from random_pesel import RandomPESEL
 
 # Loading the data from files
 firstnames_df = pd.read_excel('firstname_male.xlsx')
@@ -16,12 +17,19 @@ lastnames_df['probability'] = lastnames_df.iloc[:,1] / total_lastnames
 def generate_name(firstnames_df, lastnames_df):
     firstname = np.random.choice(firstnames_df.iloc[:,0], p=firstnames_df['probability'])
     lastname = np.random.choice(lastnames_df.iloc[:,0], p=lastnames_df['probability'])
-    return f"{firstname} {lastname}"
 
-def generate_names_list(n, firstnames_df, lastnames_df):
-    return [generate_name(firstnames_df, lastnames_df) for _ in range(n)]
+    firstname_prb = firstnames_df[firstnames_df.iloc[:,0] == firstname]['probability'].values[0]
+    lastname_prb = lastnames_df[lastnames_df.iloc[:,0] == lastname]['probability'].values[0]
 
-# Example usage: Generate 10 random names
-random_names = generate_names_list(10, firstnames_df, lastnames_df)
-for name in random_names:
-    print(name)
+    combined_prob = firstname_prb * lastname_prb
+
+    pesel = RandomPESEL()
+    pesel = pesel.generate(gender='m')
+    
+    return f"{firstname} {lastname}", combined_prob, pesel
+
+random_name, probability, pesel = generate_name(firstnames_df, lastnames_df)
+
+print(f"Generated Name: {random_name}")
+print(f"Generated Name Probability: {probability* 100:.6f}%")
+print(f"PESEL Number: {pesel}")
