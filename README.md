@@ -1,2 +1,1 @@
-Script generating Polish fullname and PESEL basing on gender. It also calculates what is probability of having such fullname.
-Script uses open source PESEL database with firstnames and lastnames.
+A script that generates a Polish full name and PESEL based on gender. It also calculates the probability of having such a name. Additionally, there is an option to generate a full name with a second name. The script uses an open-source PESEL database containing first names and last names.
