@@ -32,17 +32,19 @@ def load_data(firstname_file, lastname_file):
 def generate_name_with_probability(firstnames_df, lastnames_df):
     firstname = np.random.choice(firstnames_df.iloc[:,0], p=firstnames_df['probability'])
     lastname = np.random.choice(lastnames_df.iloc[:,0], p=lastnames_df['probability'])
+
     
     firstname_prob = firstnames_df[firstnames_df.iloc[:,0] == firstname]['probability'].values[0]
     lastname_prob = lastnames_df[lastnames_df.iloc[:,0] == lastname]['probability'].values[0]
     
     combined_prob = firstname_prob * lastname_prob
     
+    
     return f"{firstname} {lastname}", combined_prob
 
 # Load data for male and female names
-female_firstnames_df, female_lastnames_df = load_data('firstname_female.xlsx', 'lastname_female.xlsx')
-male_firstnames_df, male_lastnames_df = load_data('firstname_male.xlsx', 'lastname_male.xlsx')
+female_firstnames_df, female_lastnames_df = load_data('db/firstname_female.xlsx', 'db/lastname_female.xlsx')
+male_firstnames_df, male_lastnames_df = load_data('db/firstname_male.xlsx', 'db/lastname_male.xlsx')
 
 # Check if data is loaded correctly
 if female_firstnames_df is None or female_lastnames_df is None:
